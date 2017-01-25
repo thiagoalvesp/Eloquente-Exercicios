@@ -1,4 +1,4 @@
-function MultiplicatorUnitFailure() {}
+function MultiplicatorUnitFailure() { }
 
 function primitiveMultiply(a, b) {
     if (Math.random() < 0.5)
@@ -8,7 +8,18 @@ function primitiveMultiply(a, b) {
 }
 
 function reliableMultiply(a, b) {
-  // Coloque seu código aqui.
+
+    for (; ;) {
+        try {
+            return primitiveMultiply(a, b);
+        } catch (e) {
+            if (e instanceof MultiplicatorUnitFailure)
+                console.log("Erro Inesperado!!");
+            else
+                throw e;
+        }
+    }
+
 }
 
 console.log(reliableMultiply(8, 8)); // 64
