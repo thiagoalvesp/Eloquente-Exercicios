@@ -1,8 +1,8 @@
 var box = {
     locked: true,
-    unlock: function() { this.locked = false; },
+    unlock: function () { this.locked = false; },
 
-    lock: function() { this.locked = true;  },
+    lock: function () { this.locked = true; },
 
     _content: [],
 
@@ -15,22 +15,28 @@ var box = {
 function withBoxUnlocked(body) {
     box.unlock();
 
-    box.lock();
+    try {
+        body.call();
+    }
+    finally {
+        box.lock();
+    }
+    
 }
 
 
-withBoxUnlocked(function() {
+withBoxUnlocked(function () {
     box.content.push("gold piece");
 });
 
 try {
-    withBoxUnlocked(function() {
+    withBoxUnlocked(function () {
         throw new Error("Pirates on the horizon! Abort!");
     });
 } catch (e) {
     console.log("Error raised:", e);
-} finally{
-    box.lock();
 }
 
 console.log(box.locked); // true
+
+
