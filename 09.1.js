@@ -44,17 +44,17 @@ verify(/\w+ious\b/,
 	   ["ruinous", "consciousness"]);
 
 //Um espaço em branco seguido por um ponto, vírgula, dois-pontos, ou ponto-e-vírgula
-verify(/.../,
+verify(/\s(\.|,|:|;)/,
 	   ["bad punctuation ."],
 	   ["escape the dot"]);
 
 //Uma palavra com mais de seis letras
-verify(/.../,
+verify(/\w{7,}/,
 	   ["hottentottententen"],
 	   ["no", "hotten totten tenten"]);
 
-//Uma palavra sem a letra "e"
-verify(/.../,
+//Uma palavra sem a letra "e" |((\w+?e\w+?)\s+?(\w+?[^e]\w+?))
+verify(/(\b[a-df-z]+?\b)/,
 	   ["red platypus", "wobbling nest"],
 	   ["earth bed", "learning ape"]);
 
