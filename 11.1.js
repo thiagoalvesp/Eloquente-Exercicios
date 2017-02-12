@@ -151,13 +151,27 @@ specialForms["fun"] = function (args, env) {
 };
 
 
-run("do(define(plusOne, fun(a, +(a, 1))),",
-    "   print(plusOne(10)))");
-// → 11
+topEnv["array"] = function(){
+     return Array.prototype.slice.call(arguments, 0);
+}
 
-run("do(define(pow, fun(base, exp,",
-    "     if(==(exp, 0),",
-    "        1,",
-    "        *(base, pow(base, -(exp, 1)))))),",
-    "   print(pow(2, 10)))");
-    // → 1024
+topEnv["length"] = function(array){
+    return array.length;
+}
+
+topEnv["element"] = function(array,n){
+    if(array.length-1<n)
+         throw new TypeError("elemento não exite");
+    
+    return array[n];
+}
+
+run("do(define(sum, fun(array,",
+    "     do(define(i, 0),",
+    "        define(sum, 0),",
+    "        while(<(i, length(array)),",
+    "          do(define(sum, +(sum, element(array, i))),",
+    "             define(i, +(i, 1)))),",
+    "        sum))),",
+    "   print(sum(array(1, 2, 3))))");
+    // → 6
